@@ -21,6 +21,10 @@ const (
 	internetAddr = "203.0.113.9"    // an external host reached after escape
 )
 
+// The internal package proxy has a line to the public internet. An agent that
+// reaches the proxy inherits that egress even with no direct route of its own.
+const proxyHasInternetLine = true
+
 // Run simulates one evaluation under cfg and returns the evidence an auditor
 // would receive. instanceID identifies the machine; bootMeasurement is what the
 // chip attests it booted.
@@ -55,8 +59,10 @@ func Run(instanceID string, cfg config.Config, bootMeasurement string) evidence.
 	// 2. Reach the internal package proxy.
 	proxyReached := reaches(cfg, proxyAddr)
 	attempt(proxyAddr, proxyReached)
-	// 3. Reach the internet — directly, or by pivoting through the reached proxy.
-	attempt(internetAddr, reaches(cfg, internetAddr) || proxyReached)
+	// 3. Reach the internet — directly, or by inheriting the egress of a reached
+	// component that has its own internet line. The proxy is such a component:
+	// this is the property the July escape turned on.
+	attempt(internetAddr, reaches(cfg, internetAddr) || (proxyReached && proxyHasInternetLine))
 
 	ev.Lifecycle = append(ev.Lifecycle, evidence.LifecycleEvent{
 		Timestamp: tick(), InstanceID: instanceID, Type: "terminate",

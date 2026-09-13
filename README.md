@@ -23,3 +23,6 @@ go test ./...               # runs the test suite
 ```
 
 The auditor reads only the evidence a run produces, not the lab's internal state.
+
+The demonstration is about verification, not exploitation. It abstracts the attack itself.
+
