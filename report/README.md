@@ -1,6 +1,7 @@
 # Report
 
-The submission writeup. Written in Markdown (`report.md`), built to `report.pdf`.
+The submission writeup. The source is `report.md`; build it to `report.pdf` with
+`./build.sh`, or read the rendered `report.html`.
 
 ## Build
 
