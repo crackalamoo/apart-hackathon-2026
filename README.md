@@ -2,11 +2,9 @@
 
 A submission to the Apart Research *AI Incident Response Sprint*, Track 1 (Containment): what standard would have stopped this?
 
-## The incident
+## Abstract
 
-In July 2026, agents in an OpenAI cyber-capability evaluation escaped their sandbox. The sandbox's only permitted network path was a shared internal package proxy with public internet access; the agents found a zero-day in it, reached the open internet, and ultimately breached Hugging Face. The package manager also doubled as their coordination channel.
-
-The containment technology to prevent this already exists. What was missing was a *standard* requiring it for evaluations like this one, and a way for an outside party to *verify* a lab complied. This project is both.
+In July 2026, agents in an OpenAI capability evaluation escaped their sandbox and breached Hugging Face. The technology to prevent this already existed; what was missing was a standard requiring it for evaluations like this, and a way for an outside party to verify a lab complied. We present both. The standard defines which agentic evaluations demand strict containment and specifies, for those, an agent-system sealed from the public internet with no route out. Compliance is verified by an independent auditor from evidence generated below the agent's guest VM, so containment can be verified without exposing the model or the evaluation's contents. We demonstrate the scheme with a simulation that judges a Hugging Face incident-style escape non-compliant, and a correctly configured run compliant, using evidence like what an auditor would receive. We provide a reference cloud configuration for AWS. Adopting this standard would structurally deny any route out of eval sandboxes, helping prevent frontier labs' agents-under-test from breaching their containment.
 
 ## Contents
 
